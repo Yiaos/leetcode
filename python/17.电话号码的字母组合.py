@@ -17,7 +17,7 @@ class Solution:
             '8': "tuv",
             '9': "wxyz"
         }
-        # 1. 回溯
+        # 1. 递归, 回溯
         # if not digits:
         #     return []
         # if len(digits) == 1:
@@ -29,19 +29,21 @@ class Solution:
         # return [a+b for a in prev for b in next]
 
         # 2. 回溯
-        # def backtrack(idx):
-        #     if idx == len(digits):
-        #         ans.append("".join(combin))
-        #     else:
-        #         digit = digits[idx]
-        #         for letter in da_map[digit]:
-        #             combin.append(letter)
-        #             backtrack(idx+1)
-        #             combin.pop()
-        # ans = list()
-        # combin = list()
-        # backtrack(0)
-        # return ans
+        def backtrack(idx):
+            if idx == len(digits):
+                ans.append("".join(combin))
+            else:
+                digit = digits[idx]
+                for letter in da_map[digit]:
+                    combin.append(letter)
+                    backtrack(idx+1)
+                    combin.pop()
+        if not digits:
+            return []
+        ans = list()
+        combin = list()
+        backtrack(0)
+        return ans
 
         # 3. oneliner
         # import itertools
@@ -49,21 +51,33 @@ class Solution:
         # return ["".join(combin) for combin in itertools.product(*groups)]
 
         # 3. 队列， 广度优先搜索
-        if not digits:
-            return []
-        import collections
-        deque = collections.deque()
-        deque.append("")
-        for i in range(len(digits)):
-            deque_len = len(deque)
-            for j in range(deque_len):
-                letters = da_map[digits[i]]
-                curr_deque = deque.popleft()
-                for letter in letters:
-                    deque.append(curr_deque+letter)
-        return list(deque)
+        # if not digits:
+        #     return []
+        # import collections
+        # deque = collections.deque()
+        # deque.append("")
+        # for i in range(len(digits)):
+        #     deque_len = len(deque)
+        #     for j in range(deque_len):
+        #         letters = da_map[digits[i]]
+        #         curr_deque = deque.popleft()
+        #         for letter in letters:
+        #             deque.append(curr_deque+letter)
+        # return list(deque)
 
+        # 队列， 广度度优先搜索
+        # if not digits:
+        #     return []
+        # import collections
+        # dq = collections.deque()
+        # dq.append("")
+        # for i in range(len(digits)):
+        #     for _ in range(len(dq)):
+        #         cur_s = dq.popleft()
+        #         for s in da_map[digits[i]]:
+        #             dq.append(cur_s + s)
+        # return list(dq)
 s = Solution()
-print(s.letterCombinations("24"))
+print(s.letterCombinations(""))
 # @lc code=end
 

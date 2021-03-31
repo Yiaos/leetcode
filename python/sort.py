@@ -1,5 +1,5 @@
 # coding: utf-8
-lst = [3,23,242,67,343,3,7,8,43,5,6,73,3,455]
+lst = [3,23,242,67,343,7,8,43,5,6,73,3,455]
 
 
 def swap(lst, x, y):
@@ -146,7 +146,7 @@ def hello(who):
     print("hello %s func:%s" % (who,hello.__name__))
 
 
-hello("Bob")
+# hello("Bob")
 
 
 from functools import wraps   
@@ -162,16 +162,85 @@ def my_decorator(func):
 def example():
     """Docstring""" 
     print('Called example function')
-print(example.__name__, example.__doc__)
+# print(example.__name__, example.__doc__)
 
 
+def heap_sort(lst):
+    if not lst:
+        return []
+    # 大顶堆
+    for i in range((len(lst)-2)//2, -1, -1):
+        shiftdown(i, lst, len(lst))
+    for i in range(len(lst) - 1, 0, -1):
+        lst[0], lst[i] = lst[i], lst[0]
+        shiftdown(0, lst, i-1)
 
-# if __name__ == "__main__":
+def shiftdown(root, lst, size):
+    child = root * 2 + 1
+    # 取较大子节点
+    if child > size:
+        return
+    if child + 1 < size and lst[child] < lst[child+1]:
+        child = child + 1
+    # 交换
+    if lst[child] > lst[root]:
+        lst[child], lst[root] = lst[root], lst[child]
+    root = child
+    shiftdown(root, lst, size)
+
+def fb(n):
+    if n <= 2:
+        return n
+    else:
+        return fb(n-1) + fb(n-2)
+
+def fib(n):
+    i = 3
+    dp = [0]*(n+1)
+    dp[1] = 1 
+    dp[2] = 2
+    while i < n+1:
+        dp[i] = dp[i-1] + dp[i-2]
+        i += 1
+    return dp[n]
+
+
+arr = [[7],[3, 8], [8, 1, 0], [2, 7, 4, 4, ], [4, 5, 2, 6, 5]]
+
+def get_max():
+    int max = 101
+    dp = [[0]*len(arr) for _ in range(len(arr))]
+    n = 5
+    i = j = 0
+    max_sum = get_max_num(dp, n, i, j)
+
+def get_max_num(arr, n, i, j):
+    if i == n:
+        return arr[i][j]
+    x = get_max_num(arr, n, i+1, j)
+    y = get_max_num(arr, n, i+1, j+1)
+    return max(x, y) + arr[i][j]
+
+
+def get_max1():
+    for i in range(n-1, 1, -1):
+        for j in range(1, i+1):
+            dp[i][j] = max(dp[i+1][j], dp[i+1][j+1])
+    return dp[i][j]
+
+
+if __name__ == "__main__":
 #     # ShellSort(lst)
 #     # CountSort(lst)
-#     # HeapSort(lst)
-#     # print(lst)
+    # heap_sort(lst)
+    # HeapSort(lst)
+    print(fib(100))
+    # print(lst)
 
 # 1, 2, 3, 4, 5, 10, 11, 15, 17, 19, 20 ,21, 22, 23, 31, 32, 33, 34, 39,
-# 42, 46, 48, 49, 523, 55, 56, 62, 64, 70, 72, 75, 76, 78, 79, 84, 85,
+# 42, 46, 48, 49, 53, 55, 56, 62, 64, 70, 72, 75, 76, 78, 79, 84, 85,
 # 94, 96, 98, 101, 102, 104, 105, 114, 121, 124, 128, 136, 139, 141
+# 142, 146, 148， 152，155，160，169，198，200，206，207，208，215，221，
+# 226，234，236，238，239，240，253，279，283，287，297，300，301，309，
+# 312，322，337，338，347，394，399，406，416，437，438，448，461，494，
+# 538，543，560，581，617，621，647，739

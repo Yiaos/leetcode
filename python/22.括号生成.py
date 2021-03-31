@@ -66,22 +66,22 @@ class Solution:
         # return ans
 
         # 3. 回溯， 深度优先
-        # ans = []
-        # def backtrack(p, left, right):
-        #     if len(p) == 2*n:
-        #         ans.append(''.join(p))
-        #         return
-        #     if left < n:
-        #         p.append('(')
-        #         backtrack(p, left+1, right)
-        #         p.pop()
-        #     if right < left:
-        #         p.append(')')
-        #         backtrack(p, left, right+1)
-        #         p.pop()
+        ans = []
+        def backtrack(p, left, right):
+            if len(p) == 2*n:
+                ans.append(''.join(p))
+                return
+            if left < n:
+                p.append('(')
+                backtrack(p, left+1, right)
+                p.pop()
+            if right < left:
+                p.append(')')
+                backtrack(p, left, right+1)
+                p.pop()
             
-        # backtrack([], 0, 0)
-        # return ans
+        backtrack([], 0, 0)
+        return ans
 
         # 4. 动态规划, 未实现
         # 任何一个合法的括号序列都由(开头，并且第一个(一定有唯一与之对应的)
@@ -110,7 +110,7 @@ class Solution:
         #             yield p
         # return list(generate('', n, n))
 
-        # 6. tricks i do not understard yet
+        # 6. tricks that I do not understard yet
         if n > 0 <= open:
             return ['(' + p for p in self.generateParenthesis(n-1, open+1)] + \
                    [')' + p for p in self.generateParenthesis(n, open-1)]
