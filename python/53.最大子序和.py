@@ -24,42 +24,40 @@ class Solution:
         # return ans
 
         # 2. 动态规划
-        if not nums:
-            return
-        ans = nums[0]
-        pre = 0
-        for i in nums:
-            pre = max(pre + i, i)
-            ans = max(pre, ans)
-        return ans
+        # if not nums:
+        #     return
+        # ans = nums[0]
+        # pre = 0
+        # for i in nums:
+        #     pre = max(pre + i, i)
+        #     ans = max(pre, ans)
+        # return ans
 
         # 3. 分治
-        # n = len(nums)
-        # if n == 1:
-        #     return nums[0]
-        # else:
-        #     # 递归分别计算左右最大子序列和
-        #     mid = n // 2
-        #     max_left = self.maxSubArray(nums[:mid])
-        #     max_right = self.maxSubArray(nums[mid:])
+        n = len(nums)
+        if n == 1:
+            return nums[0]
+        else:
+            # 递归分别计算左右最大子序列和
+            mid = n // 2
+            left = self.maxSubArray(nums[:mid])
+            right = self.maxSubArray(nums[mid:])
+        # 计算中间的最大子序列和
+        # 从左侧最右开始计算左侧最大子序列和
+        # 从右侧最左侧开始计算左侧最大子序列和
+        # 相加即为中间的最大子序列和
+        max_l = nums[n//2-1]
+        pre = 0
+        for i in range(n//2-1, -1, -1):
+            pre += nums[i]
+            max_l = max(max_l, pre)
+        pre = 0
+        max_r = nums[n//2]
+        for i in range(n//2, n):
+            pre += nums[i]
+            max_r = max(max_r, pre)
+        return max(max_l+max_r, left, right)
 
-        # # 计算中间的最大子序列和
-        # # 从左侧最右开始计算左侧最大子序列和
-        # # 从右侧最左侧开始计算左侧最大子序列和
-        # # 相加即为中间的最大子序列和
-        # max_l = nums[n//2-1]
-        # pre = 0
-        # for i in range(n//2-1, -1, -1):
-        #     pre += nums[i]
-        #     max_l = max(max_l, pre)
-        # max_r = nums[n//2]
-        # pre = 0
-        # for i in nums[n//2:]:
-        #     pre += i
-        #     max_r = max(pre, max_r)
-        # # 返回三者中最大值
-        # return max(max_left, max_right, max_l + max_r)
-            
 s = Solution()
 print(s.maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
 

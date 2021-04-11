@@ -25,6 +25,7 @@ class Solution:
                         l += 1
             else:
                 for i in range(len(nums)-N+1):
+                    # 重复跳过
                     if i == 0 or (i > 0 and nums[i] != nums[i - 1]):
                         findNsum(nums[i+1:], N-1, target - nums[i], result+[nums[i]], results)
 

@@ -53,21 +53,21 @@ class Solution:
         # return dp[-1][-1]
 
         # O(n) space
-        m = len(obstacleGrid)
-        if not m:
-            return 0
-        n = len(obstacleGrid[0])
-        if not n:
-            return 0       
-        cur = [0]*n
-        cur[0] = 1 - obstacleGrid[0][0]
-        for i in range(1, n):
-            cur[i] = cur[i-1] * (1-obstacleGrid[0][i])
-        for i in range(1, m):
-            cur[0] *= (1-obstacleGrid[i][0])
-            for j in range(1, n):
-                cur[j] = (cur[j-1] + cur[j]) * (1-obstacleGrid[i][j])
-        return cur[-1]
+        # m = len(obstacleGrid)
+        # if not m:
+        #     return 0
+        # n = len(obstacleGrid[0])
+        # if not n:
+        #     return 0       
+        # cur = [0]*n
+        # cur[0] = 1 - obstacleGrid[0][0]
+        # for i in range(1, n):
+        #     cur[i] = cur[i-1] * (1-obstacleGrid[0][i])
+        # for i in range(1, m):
+        #     cur[0] *= (1-obstacleGrid[i][0])
+        #     for j in range(1, n):
+        #         cur[j] = (cur[j-1] + cur[j]) * (1-obstacleGrid[i][j])
+        # return cur[-1]
 
         # # in place
         # if not obstacleGrid:
@@ -82,7 +82,23 @@ class Solution:
         #     for j in xrange(1, c):
         #         obstacleGrid[i][j] = (obstacleGrid[i-1][j] + obstacleGrid[i][j-1]) * (1 - obstacleGrid[i][j])
         # return obstacleGrid[-1][-1]
+
+        if not obstacleGrid:
+            return 0
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+
+        dp = [0] * n
+        dp[0] = 1-obstacleGrid[0][0]
+        for i in range(1, n):
+            dp[i] = dp[i-1] * (1-obstacleGrid[0][i])
+        for i in range(1, m):
+            dp[0] *= (1-obstacleGrid[i][0])
+            for j in range(1, n):
+                dp[j] = (dp[j-1] + dp[j]) * (1-obstacleGrid[i][j])
+        return dp[-1]
+
 s = Solution()
-print(s.uniquePathsWithObstacles([[0,0,0,0],[0,1,0,0],[0,0,0,0],[0,0,1,0],[0,0,0,0]]))
+print(s.uniquePathsWithObstacles([[0,0,0],[0,1,0],[0,0,0]]))
 # @lc code=end
 

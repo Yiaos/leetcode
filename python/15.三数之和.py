@@ -14,25 +14,27 @@ class Solution:
         ans = []
         nums.sort()
         n = len(nums)
-        for i in range(n):
-            if i > 0 and nums[i] == nums[i-1]:
+        for first in range(n):
+            if first > 0 and nums[first] == nums[first-1]:
                 continue
-            target = 0 - nums[i]
-            k = n - 1
-            hashmap = {}
-            for j in range(i+1, n):
-                if j > i+1 and nums[j] == nums[j-1]:
-                    continue
-                while j < k and nums[j] + nums[k] > target:
-                    k -= 1
-                if j == k:
-                    break
-                if nums[j] + nums[k] == target:
-                    ans.append([nums[i], nums[j], nums[k]])
-
+            i, j = first+1, n-1
+            while i < j:
+                s = nums[i] + nums[j] + nums[first]
+                if s < 0:
+                    i += 1
+                elif s > 0:
+                    j -= 1
+                else:
+                    ans.append([nums[first], nums[i], nums[j]])
+                    while i < j and nums[i] == nums[i+1]:
+                        i += 1
+                    while i < j and nums[j] == nums[j-1]:
+                        j -= 1
+                    i += 1
+                    j -= 1
         return ans
 
 s = Solution()
-print(s.threeSum([0,0,0]))
+print(s.threeSum([-1,0,1,2,-1,-4]))
 # @lc code=end
 

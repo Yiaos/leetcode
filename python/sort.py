@@ -208,7 +208,7 @@ def fib(n):
 arr = [[7],[3, 8], [8, 1, 0], [2, 7, 4, 4, ], [4, 5, 2, 6, 5]]
 
 def get_max():
-    int max = 101
+    max = 101
     dp = [[0]*len(arr) for _ in range(len(arr))]
     n = 5
     i = j = 0
@@ -229,13 +229,92 @@ def get_max1():
     return dp[i][j]
 
 
+def best_time(nums):
+    ans = 0
+    min_price = nums[0]
+    max_profit = 0
+    for i in range(1, len(nums)):
+        min_price = min(nums[i], min_price)
+        max_profit = max(max_profit, nums[i] - min_price)
+    return max_profit
+
+
+class Queues():
+    pass
+
+from collections import deque
+
+class Stack():
+    def __init__(self):
+        self.q1 = deque()
+        self.q2 = deque()
+        self.p = self.q1
+    
+    def switch(self):
+        self.p = self.q1 if self.p == self.q2 else self.q2
+
+    @property
+    def another(self):
+        return self.q1 if self.p == self.q2 else self.q2
+
+    def push(self, x):
+        self.p.append(x)        
+        return
+
+    @property
+    def len(self):
+        return len(self.p)
+
+    def pop(self):
+        if self.empty():
+            return -1
+        while self.len > 1:
+            val = self.p.popleft()
+            self.another.append(val)
+        top = self.p.popleft()
+        self.switch()
+        return top
+
+    def top(self):
+        if self.empty():
+            return -1
+        return self.p[self.len-1]
+    
+    def empty(self):
+        if self.len == 0:
+            return True
+        return False
+
+
+def all(s):
+    from collections import deque
+    dq = deque()
+    dq.append('')
+    ans = []
+    while dq:
+        for letter in s:
+            dq.append(letter)
+
+def all(s):
+    if len(s) <= 1:
+        return [s]
+    ans = []
+    for i in range(len(s)):
+        for j in all(s[:i]+s[i+1:]):
+            ans.append(s[i] + j)
+    return ans.sorted()
+
+
 if __name__ == "__main__":
 #     # ShellSort(lst)
 #     # CountSort(lst)
     # heap_sort(lst)
     # HeapSort(lst)
-    print(fib(100))
+    # print(fib(100))
     # print(lst)
+    # print(best_time([7,6,4,3,1]))
+    print(all("abc"))
+
 
 # 1, 2, 3, 4, 5, 10, 11, 15, 17, 19, 20 ,21, 22, 23, 31, 32, 33, 34, 39,
 # 42, 46, 48, 49, 53, 55, 56, 62, 64, 70, 72, 75, 76, 78, 79, 84, 85,
