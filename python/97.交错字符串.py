@@ -26,6 +26,7 @@ class Solution:
         # return dp[-1][-1]
 
         # DFS BFS
+        # 分别为 s1的第x个字符，s2的第y个字符
         stack, visited = [(0, 0)], set((0,0))
         while stack:
             # DFS
@@ -41,7 +42,6 @@ class Solution:
                 stack.append((x, y+1))
                 visited.add((x, y+1))
         return False
-    
 s=Solution()
 print(s.isInterleave(s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"))
 # @lc code=end

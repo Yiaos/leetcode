@@ -22,7 +22,7 @@ class Solution:
             tmp = []
             for node in level:
                 if node.left:
-                    tmp.append(node.left)
+                    tmp.append(node.left) 
                 if node.right:
                     tmp.append(node.right)
             level = list(tmp)
